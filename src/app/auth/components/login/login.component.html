@@ -1,1 +1,12 @@
-<p>login works!</p>
+<h1>INGRESAR</h1>
+<form [formGroup]="loginForm">
+    <input type="email" formControlName="email" placeholder="ingrese su correo">
+    <br>
+    <input type="password" formControlName="password" placeholder="ingrese su contraseña">
+    <br>
+    <button (click)="ingresar()" [disabled]="!loginForm.valid">INGRESAR</button>
+</form>
+<hr>
+{{ loginForm.value | json }}
+<hr>
+{{ loginForm.valid }}

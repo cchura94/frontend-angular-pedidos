@@ -25,3 +25,14 @@ ng g m admin --routing
 
 7. Generamos el componente (layout)
 ng g c layout
+
+*********************************
+
+generar un módulo (core)
+- se encarga de habilitar los models o interfaces y services:
+ng g m core
+
+- dentro de la carpeta core, habilitamos (services, interfaces)
+y generamos el service (login)
+
+ng g s core/services/login
