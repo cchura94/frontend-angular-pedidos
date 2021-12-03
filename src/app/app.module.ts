@@ -7,6 +7,7 @@ import { InicioComponent } from './inicio/inicio.component';
 import { LayoutComponent } from './layout/layout.component';
 import { Error404Component } from './errors/error404/error404.component';
 import { CoreModule } from './core/core.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,9 @@ import { CoreModule } from './core/core.module';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    BrowserAnimationsModule,
+    AppRoutingModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
