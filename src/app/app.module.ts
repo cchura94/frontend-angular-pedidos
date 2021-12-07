@@ -8,6 +8,8 @@ import { LayoutComponent } from './layout/layout.component';
 import { Error404Component } from './errors/error404/error404.component';
 import { CoreModule } from './core/core.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptorService } from './auth-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,13 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     AppRoutingModule,
     
   ],
-  providers: [],
+  providers: [
+    /*{
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true
+    }*/
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
