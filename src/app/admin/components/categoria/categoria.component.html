@@ -1,1 +1,42 @@
-<p>categoria works!</p>
+
+<p-dialog header="Nueva Categoria" [(visible)]="display" [style]="{width: '30vw'}">
+    <form [formGroup]="categoriaForm">
+        <span class="p-float-label">
+            <input id="float-input" type="text" pInputText class="p-inputtext-lg" formControlName="nombre"> 
+            <label for="float-input">Ingrese Nombre</label>
+        </span>
+
+        <textarea pInputTextarea formControlName="detalle"></textarea>
+    </form>
+
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" label="Guardar Categoria" styleClass="p-button-text" (click)="guardarCategoria()"></p-button>
+    </ng-template>
+    {{ categoriaForm.value | json }}
+    
+</p-dialog>
+
+<button pButton type="button" (click)="abrirNuevoCategoriaDialog()" icon="pi pi-info-circle" label="Nueva Categoria"></button>
+<p-toast></p-toast>
+
+
+<p-table [value]="lista_categorias" responsiveLayout="scroll">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Detalle</th>
+            <th>Acciones</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-categoria>
+        <tr>
+            <td>{{categoria.id}}</td>
+            <td>{{categoria.nombre}}</td>
+            <td>{{categoria.detalle}}</td>
+            <td>
+
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

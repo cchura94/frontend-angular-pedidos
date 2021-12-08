@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Categoria } from '../interfaces/categoria';
 import { environment } from "./../../../environments/environment"
 
 @Injectable({
@@ -13,6 +14,22 @@ export class CategoriaService {
   constructor(protected http:HttpClient) { }
 
   getCategorias(){
-    return this.http.get(`${this.url_base}/categoria`);
+    return this.http.get<Categoria[]>(`${this.url_base}/categoria`);
+  }
+
+  storeCategoria(cate: Categoria){
+    return this.http.post(`${this.url_base}/categoria`, cate);
+  }
+
+  showCategoria(id: number){
+    return this.http.get(`${this.url_base}/categoria/${id}`);
+  }
+
+  updateCategoria(datos: Categoria, id: number){
+    return this.http.put(`${this.url_base}/categoria/${id}`, datos);
+  }
+
+  destroyCategoria(id: number){
+    return this.http.delete(`${this.url_base}/categoria/${id}`);
   }
 }

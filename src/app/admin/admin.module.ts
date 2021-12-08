@@ -9,6 +9,8 @@ import { PanelComponent } from './components/panel/panel.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CoreModule } from '../core/core.module';
 import { AuthInterceptorService } from '../auth-interceptor.service';
+import { PrimengModule } from '../primeng/primeng.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -22,7 +24,9 @@ import { AuthInterceptorService } from '../auth-interceptor.service';
     CommonModule,
     AdminRoutingModule,
     HttpClientModule,
-    CoreModule
+    CoreModule,
+    PrimengModule,
+    ReactiveFormsModule
   ],
   providers: [
     {

@@ -7,7 +7,7 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './components/login/login.component';
 import { RegistroComponent } from './components/registro/registro.component';
 import { CoreModule } from '../core/core.module';
-import {ButtonModule} from 'primeng/button';
+import { PrimengModule } from '../primeng/primeng.module';
 
 
 @NgModule({
@@ -21,7 +21,7 @@ import {ButtonModule} from 'primeng/button';
     ReactiveFormsModule,
     HttpClientModule,
     CoreModule,
-    ButtonModule
+    PrimengModule
   ]
 })
 export class AuthModule { }
