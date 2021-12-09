@@ -10,6 +10,7 @@ import { CoreModule } from './core/core.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from './auth-interceptor.service';
+import { PrimengModule } from './primeng/primeng.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,7 @@ import { AuthInterceptorService } from './auth-interceptor.service';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    
+    PrimengModule
   ],
   providers: [
     /*{

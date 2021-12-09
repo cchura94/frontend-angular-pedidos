@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { Categoria } from 'src/app/core/interfaces/categoria';
 import { CategoriaService } from 'src/app/core/services/categoria.service';
+import { SubcategoriaService } from 'src/app/core/services/subcategoria.service';
 
 @Component({
   selector: 'app-categoria',
@@ -14,13 +15,25 @@ export class CategoriaComponent implements OnInit {
 
   lista_categorias:Categoria[] = [];
   display: boolean = false;
+  displaySub: boolean = false;  
+displaySubcategorias:boolean = false
+subcategorias_list:any = {};
+cargando: boolean = true
 
   categoriaForm = new FormGroup({
     nombre: new FormControl('', Validators.required),
     detalle: new FormControl('')
   })
 
-  constructor(private categoriaService: CategoriaService, private messageService: MessageService) { }
+  subcategoriaForm = new FormGroup({
+    nombre: new FormControl('', Validators.required),
+    categoria_id: new FormControl('')
+  })
+
+
+  constructor(private categoriaService: CategoriaService, 
+              private messageService: MessageService,
+              private subCatService: SubcategoriaService) { }
 
   ngOnInit(): void {
     this.listarCategorias();
@@ -42,6 +55,17 @@ export class CategoriaComponent implements OnInit {
     this.display = true;
   }
 
+  abrirNuevoSubCategoriaDialog(){
+    this.displaySub = true;
+  }
+
+  showSubCategoriasDialog(id:number){
+    this.cargando = true
+    this.subcategorias_list = {};
+    this.displaySubcategorias = true
+    this.mostrarCategoria(id);
+  }
+
   guardarCategoria(){
     this.categoriaService.storeCategoria(this.categoriaForm.value).subscribe(
       (datos: any) => {
@@ -53,9 +77,36 @@ export class CategoriaComponent implements OnInit {
       (error) => {
         
       }
-    )
+    )    
+  }
 
-    
+  guardarSubCategoria(){
+    this.subCatService.storeSubCategoria(this.subcategoriaForm.value).subscribe(
+      (datos: any) => {
+        // this.listarCategorias()
+        // this.lista_categorias.push(datos.data)
+        this.displaySub = false
+        this.mostrarToast(datos.mensaje)
+      },
+      (error) => {
+        
+      }
+    )  
+  }
+
+  mostrarCategoria(id: number){
+    this.categoriaService.showCategoria(id).subscribe(
+      (datos: any) => {
+        // this.listarCategorias()
+        // this.lista_categorias.push(datos.data)
+        this.subcategorias_list = datos
+        
+        this.cargando =false
+      },
+      (error) => {
+        
+      }
+    )  
   }
 
   mostrarToast(valor: string) {
