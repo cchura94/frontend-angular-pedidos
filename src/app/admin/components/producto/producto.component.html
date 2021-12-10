@@ -1,1 +1,123 @@
-<p>producto works!</p>
+<div class="card">
+    <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="Nuevo producto" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNuevoProducto()"></button>
+            <button pButton pRipple icon="pi pi-trash" class="p-button-danger" [disabled]="!productos_seleccionados|| !productos_seleccionados.length"></button>
+        </ng-template>
+
+        <ng-template pTemplate="right">
+            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+        </ng-template>
+    </p-toolbar>
+
+    <p-table #dt [value]="lista_productos" [rows]="10" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']" responsiveLayout="scroll"
+        [(selection)]="productos_seleccionados" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} productos" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                <h5 class="p-m-0">Gestión Products</h5>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" placeholder="Search..." />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 3rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="nombre">Nombre <p-sortIcon field="nombre"></p-sortIcon></th>
+                <th>Imagen</th>
+                <th pSortableColumn="precio">Precio <p-sortIcon field="precio"></p-sortIcon></th>
+                <th pSortableColumn="subcategoria_id">SubCategoria <p-sortIcon field="subcategoria_id"></p-sortIcon></th>
+                <th pSortableColumn="cantidad">Cantidad <p-sortIcon field="cantidad"></p-sortIcon></th>
+                <th pSortableColumn="inventoryStatus">Status <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-prod>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="prod"></p-tableCheckbox>
+                </td>
+                <td>{{prod.nombre}}</td>
+                <td><img [src]="'assets/showcase/images/demo/product/' + prod.imagen" [alt]="prod.name" width="100" class="p-shadow-4" /></td>
+                <td>{{prod.precio | currency:'Bs. '}}</td>
+                <td>{{prod.subcategoria_id}}</td>
+                <td>
+                    {{prod.cantidad}}
+                </td>
+                <td><span>ACTIVO</span></td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" ></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" ></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                En total son {{lista_productos ? lista_productos.length : 0 }} productos.
+            </div>
+        </ng-template>
+    </p-table>
+
+
+    <p-dialog [(visible)]="productoDialog" [style]="{width: '450px'}" header="Detalles del Producto" [modal]="true" styleClass="p-fluid">
+        <ng-template pTemplate="content">
+            <img [src]="'assets/showcase/images/demo/product/' + product.image" [alt]="product.image" class="product-image" *ngIf="product.imagen">
+            <div class="p-field">
+                <label for="name">Nombre</label>
+                <input type="text" pInputText id="name" required autofocus />
+                <small class="p-error" *ngIf="submitted && !product.nombre">Nombre Oblogatorio.</small>
+            </div>
+            <div class="p-field">
+                <label for="description">Descripción</label>
+                <textarea id="description" pInputTextarea rows="3" cols="20"></textarea>
+            </div>
+            <div class="p-field">
+                <label for="cant">Cantidad</label>
+                <input type="number" pInputText id="cant" autofocus />
+            </div>
+    
+            <div class="p-field">
+                <label class="p-mb-3">Categoria</label>
+                <div class="p-formgrid p-grid">
+                    <div class="p-field-radiobutton p-col-6">
+                        <p-radioButton id="category1" name="category" value="Accessories" ></p-radioButton>
+                        <label for="category1">Accessories</label>
+                    </div>
+                    <div class="p-field-radiobutton p-col-6">
+                        <p-radioButton id="category2" name="category" value="Clothing" ></p-radioButton>
+                        <label for="category2">Clothing</label>
+                    </div>
+                    <div class="p-field-radiobutton p-col-6">
+                        <p-radioButton id="category3" name="category" value="Electronics" ></p-radioButton>
+                        <label for="category3">Electronics</label>
+                    </div>
+                    <div class="p-field-radiobutton p-col-6">
+                        <p-radioButton id="category4" name="category" value="Fitness"></p-radioButton>
+                        <label for="category4">Fitness</label>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="p-formgrid p-grid">
+                <div class="p-field p-col">
+                    <label for="price">Precio</label>
+                    <p-inputNumber id="price" mode="currency" currency="COP" locale="en-US"></p-inputNumber>
+                </div>
+                <div class="p-field p-col">
+                    <label for="quantity">Cantidad</label>
+                    <p-inputNumber id="quantity"></p-inputNumber>
+                </div>
+            </div>
+        </ng-template>
+    
+        <ng-template pTemplate="footer">
+            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" ></button>
+            <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"></button>
+        </ng-template>
+    </p-dialog>
+
+</div>

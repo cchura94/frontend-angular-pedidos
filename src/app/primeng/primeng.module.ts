@@ -10,6 +10,9 @@ import {MenubarModule} from 'primeng/menubar';
 import {MenuItem} from 'primeng/api';
 import {CascadeSelectModule} from 'primeng/cascadeselect';
 import {DropdownModule} from 'primeng/dropdown';
+import {ToolbarModule} from 'primeng/toolbar';
+import {RadioButtonModule} from 'primeng/radiobutton';
+import {InputNumberModule} from 'primeng/inputnumber';
 
 const modulos = [
   CommonModule,
@@ -22,7 +25,10 @@ const modulos = [
   //MenuItem,
   MenubarModule,
   CascadeSelectModule,
-  DropdownModule
+  DropdownModule,
+  ToolbarModule,
+  RadioButtonModule,
+  InputNumberModule
 ]
 
 @NgModule({
