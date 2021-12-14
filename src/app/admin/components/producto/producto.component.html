@@ -42,7 +42,7 @@
                     <p-tableCheckbox [value]="prod"></p-tableCheckbox>
                 </td>
                 <td>{{prod.nombre}}</td>
-                <td><img [src]="'assets/showcase/images/demo/product/' + prod.imagen" [alt]="prod.name" width="100" class="p-shadow-4" /></td>
+                <td><img [src]="prod.imagen" [alt]="prod.name" width="100" class="p-shadow-4" /></td>
                 <td>{{prod.precio | currency:'Bs. '}}</td>
                 <td>{{prod.subcategoria_id}}</td>
                 <td>
@@ -64,59 +64,71 @@
 
 
     <p-dialog [(visible)]="productoDialog" [style]="{width: '450px'}" header="Detalles del Producto" [modal]="true" styleClass="p-fluid">
-        <ng-template pTemplate="content">
+        <ng-template pTemplate="content" >
+            <form [formGroup]="productoForm">
             <img [src]="'assets/showcase/images/demo/product/' + product.image" [alt]="product.image" class="product-image" *ngIf="product.imagen">
             <div class="p-field">
                 <label for="name">Nombre</label>
-                <input type="text" pInputText id="name" required autofocus />
+                <input type="text" pInputText id="name" required autofocus formControlName="nombre" />
                 <small class="p-error" *ngIf="submitted && !product.nombre">Nombre Oblogatorio.</small>
             </div>
             <div class="p-field">
                 <label for="description">Descripción</label>
-                <textarea id="description" pInputTextarea rows="3" cols="20"></textarea>
-            </div>
-            <div class="p-field">
-                <label for="cant">Cantidad</label>
-                <input type="number" pInputText id="cant" autofocus />
+                <textarea id="description" pInputTextarea rows="3" cols="20" formControlName="descripcion"></textarea>
             </div>
     
             <div class="p-field">
                 <label class="p-mb-3">Categoria</label>
-                <div class="p-formgrid p-grid">
-                    <div class="p-field-radiobutton p-col-6">
-                        <p-radioButton id="category1" name="category" value="Accessories" ></p-radioButton>
-                        <label for="category1">Accessories</label>
-                    </div>
-                    <div class="p-field-radiobutton p-col-6">
-                        <p-radioButton id="category2" name="category" value="Clothing" ></p-radioButton>
-                        <label for="category2">Clothing</label>
-                    </div>
-                    <div class="p-field-radiobutton p-col-6">
-                        <p-radioButton id="category3" name="category" value="Electronics" ></p-radioButton>
-                        <label for="category3">Electronics</label>
-                    </div>
-                    <div class="p-field-radiobutton p-col-6">
-                        <p-radioButton id="category4" name="category" value="Fitness"></p-radioButton>
-                        <label for="category4">Fitness</label>
-                    </div>
-                </div>
+                <p-dropdown 
+                    [options]="lista_categorias" 
+                    placeholder="Seleccionar Categoria" 
+                    [virtualScroll]="true" 
+                    [itemSize]="31" 
+                    [filter]="true"
+                    optionLabel="nombre"
+                    optionValue="id"
+                    (onChange)="seleccionCategoria($event)"
+                    
+                    >
+                </p-dropdown>
+
+                <label class="p-mb-3">Sub Categoria</label>
+                <p-dropdown 
+                    [options]="lista_subcategorias" 
+                    placeholder="Seleccionar Subcategoria" 
+                    [virtualScroll]="true" 
+                    [itemSize]="31" 
+                    [filter]="true"
+                    optionLabel="nombre"
+                    optionValue="id"  
+                    formControlName="subcategoria_id"                  
+                    >
+                </p-dropdown>
             </div>
     
             <div class="p-formgrid p-grid">
                 <div class="p-field p-col">
                     <label for="price">Precio</label>
-                    <p-inputNumber id="price" mode="currency" currency="COP" locale="en-US"></p-inputNumber>
+                    <p-inputNumber id="price" mode="currency" currency="BOB" locale="en-US" formControlName="precio"></p-inputNumber>
                 </div>
                 <div class="p-field p-col">
                     <label for="quantity">Cantidad</label>
-                    <p-inputNumber id="quantity"></p-inputNumber>
+                    <p-inputNumber id="quantity" formControlName="cantidad"></p-inputNumber>
                 </div>
             </div>
+            <div class="p-formgrid p-grid">
+                <div class="p-field p-col">
+                    <label for="">Cargar Imagen</label>
+                    <input type="file" (change)="imagenSeleccionada($event)" accept="image/png, imagen/gif, imagen/jpg, imagen/jpeg">
+                </div>
+            </div>
+        </form>
+            {{ productoForm.value | json }}
         </ng-template>
     
         <ng-template pTemplate="footer">
-            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" ></button>
-            <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"></button>
+            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" ></button>
+            <button pButton pRipple label="Guardar Producto" icon="pi pi-check" class="p-button-text" (click)="guardarProducto()"></button>
         </ng-template>
     </p-dialog>
 
