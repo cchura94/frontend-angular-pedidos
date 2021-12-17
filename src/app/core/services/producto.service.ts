@@ -12,8 +12,11 @@ export class ProductoService {
 
   constructor(private http:HttpClient) { }
 
-  indexProducto(){
-    return this.http.get(`${this.url}/producto`);
+  indexProducto(page:any){
+    /*if(!page){
+      page = 1      
+    }*/
+    return this.http.get(`${this.url}/producto?page=${page}`);
   }
 
   storeProducto(datos: FormGroup){

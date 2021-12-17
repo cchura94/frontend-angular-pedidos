@@ -4,6 +4,7 @@ import { CategoriaService } from 'src/app/core/services/categoria.service';
 import { Categoria } from 'src/app/core/interfaces/categoria'
 
 import { FormGroup, FormControl } from '@angular/forms'
+import { LazyLoadEvent } from 'primeng/api';
 @Component({
   selector: 'app-producto',
   templateUrl: './producto.component.html',
@@ -15,6 +16,10 @@ export class ProductoComponent implements OnInit {
   lista_productos: any[] = [];
   product: any;
   productos_seleccionados: any[] = [];
+  paginacion: any;
+  nropage:number = 1;
+  total_datos: number = 0;
+  loading: boolean = false
   // solo prueba
   submitted: boolean = false;
   statuses: any[] = [];
@@ -40,15 +45,32 @@ export class ProductoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.listaProductos();
+    this.listaProductos({});
     this.listaCategorias();
   }
 
-  listaProductos() {
-    this.prodService.indexProducto().subscribe(
+  loadProductos(event: LazyLoadEvent){
+    this.loading = true
+    console.log(event)
+    let first = event.first?event.first:0
+
+    let page = Math.ceil((first+1)/this.paginacion.per_page)
+
+
+    this.listaProductos(page);
+  }
+
+  listaProductos(page:any) {
+        
+    this.prodService.indexProducto(page).subscribe(
       (res: any) => {
         console.log(res)
         this.lista_productos = res.data
+        this.paginacion = res
+        this.nropage = res.current_page
+        this.total_datos = res.total
+
+        this.loading = false
       }
     )
   }

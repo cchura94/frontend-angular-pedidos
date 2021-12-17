@@ -10,8 +10,8 @@
         </ng-template>
     </p-toolbar>
 
-    <p-table #dt [value]="lista_productos" [rows]="10" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']" responsiveLayout="scroll"
-        [(selection)]="productos_seleccionados" [rowHover]="true" dataKey="id"
+    <p-table *ngIf="paginacion" #dt [value]="lista_productos" [lazy]="true" (onLazyLoad)="loadProductos($event)" [rows]="paginacion.per_page" [paginator]="true" [totalRecords]="paginacion.total" [globalFilterFields]="['name','country.name','representative.name','status']" responsiveLayout="scroll"
+        [(selection)]="productos_seleccionados" [rowHover]="true" dataKey="id" [loading]="loading"
         currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} productos" [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
             <div class="p-d-flex p-ai-center p-jc-between">
@@ -42,7 +42,7 @@
                     <p-tableCheckbox [value]="prod"></p-tableCheckbox>
                 </td>
                 <td>{{prod.nombre}}</td>
-                <td><img [src]="prod.imagen" [alt]="prod.name" width="100" class="p-shadow-4" /></td>
+                <td><img [src]="'http://127.0.0.1:8000/imagenes/'+prod.imagen" [alt]="prod.nombre" width="100" class="p-shadow-4" /></td>
                 <td>{{prod.precio | currency:'Bs. '}}</td>
                 <td>{{prod.subcategoria_id}}</td>
                 <td>
